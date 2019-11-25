@@ -5,7 +5,7 @@ pipeline{
     stages{
         stage('Creating image'){
             steps{
-                echo 1
+                echo '1'
             }
         }
     }
