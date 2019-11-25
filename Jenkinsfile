@@ -2,13 +2,13 @@ pipeline{
     agent any
     stages{
 
-        stage('Checkout'){
+        stage('Clone Repository'){
             steps{
                 echo 'Checking out DreamkasRfCompiler repository code...'
                 checkout scm
             }
         }
-        stage('Build image'){
+        stage('Build Image'){
             steps{
                 echo 'Building a docker image...'
 
