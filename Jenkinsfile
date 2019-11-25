@@ -1,8 +1,10 @@
-agent {
-    dockerfile {
-    filename 'Dockerfile'
-    label 'fisgo-label-image'
-    additionalBuildArgs  '--force-rm'
-    args '-t fisgo-name' 
+pipeline {
+    agent {
+        dockerfile {
+            filename 'Dockerfile'
+            label 'fisgo-label-image'
+            args '-t fisgo-name'
+            additionalBuildArgs  '--force-rm'
+        }
     }
 }
