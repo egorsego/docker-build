@@ -1,15 +1,11 @@
 pipeline{
     agent{
-        dockerfile{
-            filename 'Dockerfile'
-            args '-t fisgo-name'
-            additionalBuildArgs  '--force-rm'
-        }
+        dockerfile true
     }
     stages{
-        stage('Create an image out of Dockerfile'){
+        stage('Creating image'){
             steps{
-                echo 'building an image...'
+                echo 1
             }
         }
     }
