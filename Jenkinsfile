@@ -6,7 +6,7 @@ pipeline{
                 echo 'Starting to build a docker image'
 
                 script {
-                    def dockerImage = docker.build("myImage:myTag")
+                    def dockerImage = docker.build("my_image:my_tag")
                 }
             }
         }
