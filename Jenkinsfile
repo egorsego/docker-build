@@ -1,11 +1,13 @@
 pipeline{
-    agent{
-        dockerfile true
-    }
+    agent any
     stages{
-        stage('Creating image'){
+        stage('Build image'){
             steps{
-                echo '1'
+                echo 'Starting to build a docker image'
+
+                script {
+                    def dockerImage = docker.build("myImage:myTag")
+                }
             }
         }
     }
