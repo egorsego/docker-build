@@ -8,6 +8,10 @@ pipeline{
         }
     }
     stages{
-        stage("Create an image out of Dockerfile")
+        stage("Create an image out of Dockerfile"){
+            steps{
+                echo "building an image..."
+            }
+        }
     }
 }
