@@ -11,9 +11,9 @@ pipeline{
         stage('Build image'){
             steps{
                 echo 'Building a docker image...'
-                
+
                 script {
-                    def dockerImage = docker.build("my_image:my_tag")
+                    def dreamkasRfCompilerImage = docker.build("dreamkasRfCompiler:${env.BUILD_ID}")
                 }
             }
         }
