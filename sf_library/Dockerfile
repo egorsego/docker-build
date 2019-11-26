@@ -5,9 +5,11 @@ RUN     pwd
 RUN     ls -la
 WORKDIR /tmp
 RUN     ls -la
-ADD     /fisgo/Libraries /FisGo
+ADD     /fisgo/Libraries tmp/FisGo
 RUN     ls -la
-WORKDIR /tmp/FisGo
+WORKDIR /tmp/tmp
+RUN     ls -la
+WORKDIR /tmp/tmp/FisGo
 RUN     ls -la
 WORKDIR /tmp/FisGo/Libraries
 RUN     ./deployLibs.bash 1 n
