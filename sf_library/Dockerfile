@@ -5,7 +5,7 @@ RUN     pwd
 RUN     ls -la
 WORKDIR /tmp
 RUN     ls -la
-ADD     /fisgo/Libraries tmp/FisGo
+ADD     /fisgo/Libraries /FisGo
 RUN     ls -la
 WORKDIR /tmp/FisGo
 RUN     ls -la
