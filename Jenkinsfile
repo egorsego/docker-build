@@ -1,5 +1,5 @@
-def compilerImageTitle = "dreamkas_rf_compiler"
-def libraryImageTitle = "dreamkas_sf_library"
+def compilerImageTitle = "dreamkasRfCompiler"
+def libraryImageTitle = "dreamkasSfLibrary"
 
 pipeline{
     agent any
@@ -35,7 +35,7 @@ pipeline{
 
                 echo 'Building DreamkasSFLibrary image...'
                 script {
-                    def dreamkasSFLibraryImage = docker.build(compilerImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
+                    def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
                 }
             }
         }
