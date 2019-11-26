@@ -5,10 +5,17 @@ pipeline{
     agent any
     stages{
         
-        stage('Clone Repository'){
+        stage('Cloning Repositories'){
             steps{
                 echo 'Checking out DreamkasRfCompiler repository code...'
-                checkout scm
+                dir('compiler') {
+                    git url: 'https://github.com/dreamkas/DreamkasRfCompiler.git'
+                }
+
+                echo 'Checking out FisGo-F Library repository code...'
+                dir('library') {
+                    git url: 'https://github.com/dreamkas/FisGo_F.git'
+                }
             }
         }
 
