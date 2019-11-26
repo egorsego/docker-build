@@ -1,5 +1,5 @@
-def compilerImageTitle = "dreamkasRfCompiler"
-def libraryImageTitle = "dreamkasSfLibrary"
+def compilerImageTitle = "dreamkas-rf-compiler"
+def libraryImageTitle = "dreamkas-sf-library"
 
 pipeline{
     agent any
