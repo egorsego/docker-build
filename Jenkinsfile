@@ -25,6 +25,7 @@ pipeline{
             post{
                 always{
                     echo 'Removing dangling images...' 
+                    sh 'docker container prune --force'
                     sh 'docker image prune --filter "dangling=true" --force'
                 }
             }
@@ -38,6 +39,14 @@ pipeline{
                 echo 'Building DreamkasSFLibrary image...'
                 script {
                     def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
+                }
+            }
+
+            post{
+                always{
+                    echo 'Removing dangling images...' 
+                    sh 'docker container prune --force'
+                    sh 'docker image prune --filter "dangling=true" --force'
                 }
             }
         }
