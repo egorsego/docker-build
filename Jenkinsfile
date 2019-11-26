@@ -32,6 +32,11 @@ pipeline{
             steps{
                 echo 'Removing old Library image...'
                 sh "docker rmi ${libraryImageTitle} || true" 
+
+                echo 'Building DreamkasSFLibrary image...'
+                script {
+                    def dreamkasSFLibraryImage = docker.build(compilerImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
+                }
             }
         }
     }
