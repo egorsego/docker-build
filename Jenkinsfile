@@ -30,10 +30,8 @@ pipeline{
 
         stage('Build Library Image'){
             steps{
-                echo '${libraryImageTitle}'
-                echo "${libraryImageTitle}"
                 echo 'Removing old Library image...'
-                sh 'docker rmi ${libraryImageTitle} || true' 
+                sh "docker rmi ${libraryImageTitle} || true" 
             }
         }
     }
