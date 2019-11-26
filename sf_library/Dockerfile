@@ -1,4 +1,4 @@
-FROM    dreamkas_rf_compiler
+FROM    dreamkas-rf-compiler:latest
 
 RUN     apt-get install -y sudo
 ADD     . /tmp/FisGo

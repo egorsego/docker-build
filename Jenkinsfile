@@ -16,7 +16,7 @@ pipeline{
             steps{
                 echo 'Building DreamkasRfCompiler image...'
                 script {
-                    def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
+                    def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
                 }
             }
 
@@ -35,7 +35,7 @@ pipeline{
 
                 echo 'Building DreamkasSFLibrary image...'
                 script {
-                    def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
+                    def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
                 }
             }
         }
