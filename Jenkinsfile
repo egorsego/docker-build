@@ -13,7 +13,7 @@ pipeline{
                 echo 'Building a docker image...'
 
                 script {
-                    def dreamkasRfCompilerImage = docker.build("dreamkas_rf_compiler:${env.BUILD_ID}, "-f ${env.WORKSPACE}/rf_compiler/Dockerfile ."")
+                    def dreamkasRfCompilerImage = docker.build("dreamkas_rf_compiler:${env.BUILD_ID}", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
                 }
             }
         }
