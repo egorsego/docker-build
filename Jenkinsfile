@@ -9,7 +9,7 @@ pipeline{
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
                 dir('library') {
-                    git url: 'https://github.com/dreamkas/FisGo_F.git'
+                    git credentialsId: 'egorsego-github', url: 'https://github.com/dreamkas/FisGo_F.git'
                 }
             }
         }
