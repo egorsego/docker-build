@@ -8,7 +8,7 @@ pipeline{
         stage('Cloning Repositories'){
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
-                dir('library') {
+                dir('fisgo') {
                     git credentialsId: 'egorsego-github', url: 'https://github.com/dreamkas/FisGo_F.git'
                 }
             }
