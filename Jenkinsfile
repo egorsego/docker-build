@@ -18,12 +18,12 @@ pipeline{
                 script {
                     def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
                 }
+            }
 
-                post{
-                    always{
-                        echo 'Removing dangling images...' 
-                        sh 'docker image prune --filter "dangling=true" --force'
-                    }
+            post{
+                always{
+                    echo 'Removing dangling images...' 
+                    sh 'docker image prune --filter "dangling=true" --force'
                 }
             }
         }
