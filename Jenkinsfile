@@ -1,20 +1,36 @@
+def compilerImageTitle = "dreamkas_rf_compiler"
+def libraryImageTitle = "dreamkas_sf_library"
+
 pipeline{
     agent any
     stages{
-
+        
         stage('Clone Repository'){
             steps{
                 echo 'Checking out DreamkasRfCompiler repository code...'
                 checkout scm
             }
         }
-        stage('Build Image'){
+        
+        stage('Build Compiler Image'){
             steps{
-                echo 'Building a docker image...'
-
+                echo 'Building DreamkasRfCompiler image...'
                 script {
-                    def dreamkasRfCompilerImage = docker.build("dreamkas_rf_compiler:${env.BUILD_ID}", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
+                    def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":${env.BUILD_ID}", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
                 }
+                post{
+                    always{
+                        echo 'Removing dangling images...' 
+                        sh 'docker image prune --filter "dangling=true" --force'
+                    }
+                }
+            }
+        }
+
+        stage('Build Library Image'){
+            steps{
+                echo 'Removing old Library image...'
+                sh 'docker rmi ${libraryImageTitle} || true' 
             }
         }
     }
