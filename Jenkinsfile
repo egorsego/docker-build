@@ -6,7 +6,7 @@ pipeline{
     agent any
     stages{
         
-        stage('Cloning Repositories'){
+        stage('Clone FisGo_F'){
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
                 dir('FisGo') {
@@ -25,9 +25,7 @@ pipeline{
 
             post{
                 always{
-                    echo 'Removing dangling images...' 
-                    sh 'docker container prune --force'
-                    sh 'docker image prune --filter "dangling=true" --force'
+                    clearDanglingImages()
                 }
             }
         }
@@ -48,9 +46,7 @@ pipeline{
 
             post{
                 always{
-                    echo 'Removing dangling images...' 
-                    sh 'docker container prune --force'
-                    sh 'docker image prune --filter "dangling=true" --force'
+                    clearDanglingImages()
                 }
             }
         }
@@ -72,9 +68,7 @@ pipeline{
 
             post{
                 always{
-                    echo 'Removing dangling images...' 
-                    sh 'docker container prune --force'
-                    sh 'docker image prune --filter "dangling=true" --force'
+                    clearDanglingImages()
                 }
             }
         }
@@ -86,4 +80,10 @@ pipeline{
             cleanWs()
         }
     }
+}
+
+void clearDanglingImages() {
+    echo 'Removing dangling images...' 
+    sh 'docker container prune --force'
+    sh 'docker image prune --filter "dangling=true" --force'
 }
