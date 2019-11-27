@@ -20,7 +20,7 @@ pipeline{
             steps{
                 echo 'Building DreamkasRfCompiler image...'
                 script {
-                    def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/rf_compiler/compiler.dockerfile .")
+                    docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/rf_compiler/compiler.dockerfile .")
                 }
             }
 
@@ -38,7 +38,7 @@ pipeline{
 
                 echo 'Building DreamkasSFLibrary image...'
                 script {
-                    def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/library.dockerfile .")
+                    docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/library.dockerfile .")
                 }
 
                 sh 'mkdir -p ./FisGo/PATCH/lib'
@@ -56,7 +56,7 @@ pipeline{
             steps{
                 echo 'Building Fiscat image...'
                 script {
-                    def dreamkasFiscatImage = docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/fiscat/fiscat.dockerfile .")
+                    docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/fiscat/fiscat.dockerfile .")
                 }
 
                 echo 'Examining files after compilation...'
@@ -74,25 +74,12 @@ pipeline{
             }
         }
 
-        stage('Build Units Test Image'){
+        stage('SSH Test'){
             steps{
-                echo 'Building Units Test image...'
-                script {
-                    def unitsTestImage = docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/units/units.dockerfile .")
-                }
-
-                echo 'Examining files after compilation...'
-                sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
-
-                echo 'Copying files from image...'
-                sh 'mkdir -p ./FisGo/build/fiscat/units'
-                sh "docker cp unitsContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat/units"
-            }
-
-            post{
-                always{
-                    removeUnusedContainersAndDanglingImages()
-                }
+                echo 'Testing SSH Connection'
+                
+                sh 'ssh root@192.168.242.180'
+                sh 'ls -la ./..'
             }
         }
     }
