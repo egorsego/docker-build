@@ -66,6 +66,7 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo 'Copying files from image...'
+                sh 'mkdir -p ./FisGo/build/fiscat'
                 sh "docker cp ${fiscatImageTitle}:latest:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
             }
 
@@ -76,6 +77,13 @@ pipeline{
                     sh 'docker image prune --filter "dangling=true" --force'
                 }
             }
+        }
+    }
+    
+    post{
+        always{
+            echo 'Cleaning up workspace...' 
+            cleanWs()
         }
     }
 }
