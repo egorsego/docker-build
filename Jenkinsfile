@@ -63,7 +63,7 @@ pipeline{
 
                 echo 'Copying files from image...'
                 sh 'mkdir -p ./FisGo/build/fiscat'
-                sh "docker cp ${fiscatImageTitle}:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
+                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
             }
 
             post{
