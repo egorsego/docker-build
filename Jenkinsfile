@@ -40,6 +40,9 @@ pipeline{
                 script {
                     def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
                 }
+
+                sh 'mkdir -p ./PATCH/lib'
+                sh 'find . -name *.so -exec cp -- "{}" ./PATCH/lib/ \;'
             }
 
             post{
@@ -49,13 +52,6 @@ pipeline{
                     sh 'docker image prune --filter "dangling=true" --force'
                 }
             }
-        }
-    }
-
-    post{
-        always{
-            echo 'Cleaning up workspace...' 
-            cleanWs()
         }
     }
 }
