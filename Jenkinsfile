@@ -1,5 +1,6 @@
 def compilerImageTitle = "dreamkas-rf-compiler"
 def libraryImageTitle = "dreamkas-sf-library"
+def fiscatImageTitle = "fiscat"
 
 pipeline{
     agent any
@@ -52,6 +53,32 @@ pipeline{
                     sh 'docker image prune --filter "dangling=true" --force'
                 }
             }
+        }
+
+        stage('Build Fiscat Image'){
+            steps{
+                echo 'Building Fiscat image...'
+                script {
+                    def dreamkasFiscatImage = docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/fiscat/Dockerfile .")
+                }
+
+                echo 'Running ficat container...'
+                sh "docker run ${fiscatImageTitle}:latest --name fiscatContainer ls -la /tmp/FisGo/build"
+            }
+
+            post{
+                always{
+                    echo 'Removing dangling images...' 
+                    sh 'docker container prune --force'
+                    sh 'docker image prune --filter "dangling=true" --force'
+                }
+            }
+        }
+    }
+        post{
+        always{
+            echo 'Cleaning up workspace...' 
+            cleanWs()
         }
     }
 }
