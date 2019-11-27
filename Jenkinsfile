@@ -9,7 +9,7 @@ pipeline{
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
                 dir('FisGo') {
-                    git credentialsId: 'fisgo-ci-github', url: 'https://github.com/dreamkas/FisGo_F.git'
+                    git credentialsId: 'fisgo-ci-github', url: 'https://github.com/dreamkas/FisGo_F.git', branch: 'develop'
                 }
             }
         }
@@ -40,6 +40,7 @@ pipeline{
                 script {
                     def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
                 }
+                sh 'ls -la'
             }
 
             post{
