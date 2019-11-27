@@ -40,7 +40,6 @@ pipeline{
                 script {
                     def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
                 }
-                sh 'ls -la'
             }
 
             post{
