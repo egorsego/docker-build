@@ -63,7 +63,7 @@ pipeline{
                 }
 
                 echo 'Running ficat container...'
-                sh "docker run ${fiscatImageTitle}:latest --name fiscatContainer ls -la /tmp/FisGo/build"
+                sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
             }
 
             post{
