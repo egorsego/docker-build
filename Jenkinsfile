@@ -1,6 +1,7 @@
 def compilerImageTitle = "dreamkas-rf-compiler"
 def libraryImageTitle = "dreamkas-sf-library"
 def fiscatImageTitle = "dreamkas-fiscat-f"
+def unitsTestImageTitle = "dreamkas-units"
 
 pipeline{
     agent any
@@ -25,7 +26,7 @@ pipeline{
 
             post{
                 always{
-                    clearDanglingImages()
+                    removeUnusedContainersAndDanglingImages()
                 }
             }
         }
@@ -46,7 +47,7 @@ pipeline{
 
             post{
                 always{
-                    clearDanglingImages()
+                    removeUnusedContainersAndDanglingImages()
                 }
             }
         }
@@ -64,14 +65,33 @@ pipeline{
                 echo 'Copying files from image...'
                 sh 'mkdir -p ./FisGo/build/fiscat'
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
-
-                echo 'Deleting fiscat container...'
-                sh 'docker rm -f fiscatContainer'
             }
 
             post{
                 always{
-                    clearDanglingImages()
+                    removeUnusedContainersAndDanglingImages()
+                }
+            }
+        }
+
+        stage('Build Units Test Image'){
+            steps{
+                echo 'Building Units Test image...'
+                script {
+                    def unitsTestImage = docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/units/units.dockerfile .")
+                }
+
+                echo 'Examining files after compilation...'
+                sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
+
+                echo 'Copying files from image...'
+                sh 'mkdir -p ./FisGo/build/fiscat/units'
+                sh "docker cp unitsContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat/units"
+            }
+
+            post{
+                always{
+                    removeUnusedContainersAndDanglingImages()
                 }
             }
         }
@@ -85,7 +105,7 @@ pipeline{
     }
 }
 
-void clearDanglingImages() {
+void removeUnusedContainersAndDanglingImages() {
     echo 'Removing dangling images...' 
     sh 'docker container prune --force'
     sh 'docker image prune --filter "dangling=true" --force'
