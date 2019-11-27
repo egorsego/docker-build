@@ -74,11 +74,35 @@ pipeline{
             }
         }
 
+/*
+        stage('Build Units Test Image'){
+            steps{
+                echo 'Building Units Test image...'
+                script {
+                    docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/units/units.dockerfile .")
+                }
+
+                echo 'Examining files after compilation...'
+                sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
+
+                echo 'Copying files from image...'
+                sh 'mkdir -p ./FisGo/build/fiscat/units'
+                sh "docker cp unitsContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat/units"
+            }
+
+            post{
+                always{
+                    removeUnusedContainersAndDanglingImages()
+                }
+            }
+        }
+*/
+
         stage('SSH Test'){
             steps{
                 echo 'Testing SSH Connection'
                 
-                sh 'ssh root@192.168.242.180'
+                sh 'ssh -T root@192.168.242.180'
                 sh 'ls -la ./..'
             }
         }
