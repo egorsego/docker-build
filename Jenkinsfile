@@ -6,7 +6,7 @@ pipeline{
     agent any
     stages{
         
-        stage('Clone FisGo_F'){
+        stage('Clone FisGo_F Repository'){
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
                 dir('FisGo') {
@@ -19,7 +19,7 @@ pipeline{
             steps{
                 echo 'Building DreamkasRfCompiler image...'
                 script {
-                    def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/rf_compiler/Dockerfile .")
+                    def dreamkasRfCompilerImage = docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/rf_compiler/compiler.dockerfile .")
                 }
             }
 
@@ -37,7 +37,7 @@ pipeline{
 
                 echo 'Building DreamkasSFLibrary image...'
                 script {
-                    def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
+                    def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/library.dockerfile .")
                 }
 
                 sh 'mkdir -p ./FisGo/PATCH/lib'
@@ -55,7 +55,7 @@ pipeline{
             steps{
                 echo 'Building Fiscat image...'
                 script {
-                    def dreamkasFiscatImage = docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/fiscat/Dockerfile .")
+                    def dreamkasFiscatImage = docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/fiscat/fiscat.dockerfile .")
                 }
 
                 echo 'Examining files after compilation...'
@@ -64,6 +64,9 @@ pipeline{
                 echo 'Copying files from image...'
                 sh 'mkdir -p ./FisGo/build/fiscat'
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
+
+                echo 'Deleting fiscat container...'
+                sh 'docker rm -f fiscatContainer'
             }
 
             post{
