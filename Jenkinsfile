@@ -42,8 +42,8 @@ pipeline{
                     def dreamkasSFLibraryImage = docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/Dockerfile .")
                 }
 
-                sh 'mkdir -p ./PATCH/lib'
-                sh "find . -type f -name '*.so' -exec cp '{}' ./PATCH/lib/ ';'"
+                sh 'mkdir -p ./FisGo/PATCH/lib'
+                sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
             }
 
             post{
