@@ -8,8 +8,8 @@ pipeline{
         stage('Cloning Repositories'){
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
-                dir('fisgo') {
-                    git credentialsId: 'egorsego-github', url: 'https://github.com/dreamkas/FisGo_F.git'
+                dir('FisGo') {
+                    git credentialsId: 'fisgo-ci-github', url: 'https://github.com/dreamkas/FisGo_F.git'
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline{
         stage('Build Library Image'){
             steps{
                 echo 'Removing old Library image...'
-                sh "docker rmi ${libraryImageTitle} || true" 
+                sh "docker rmi ${libraryImageTitle}:latest || true" 
 
                 echo 'Building DreamkasSFLibrary image...'
                 script {
