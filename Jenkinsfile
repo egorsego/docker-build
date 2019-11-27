@@ -42,7 +42,7 @@ pipeline{
                 }
 
                 sh 'mkdir -p ./PATCH/lib'
-                sh 'find . -name *.so -exec cp {} ./PATCH/lib/ \;'
+                sh "find . -type f -name '*.so' -exec cp '{}' ./PATCH/lib/ ';'"
             }
 
             post{
