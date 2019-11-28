@@ -124,7 +124,7 @@ pipeline{
         always{
             echo 'Cleaning up workspace...' 
             echo 'Environment var: ${env.IS_CLEANING_NEEDED}'
-            cleanWorkSpace(${env.IS_CLEANING_NEEDED})
+            cleanWorkSpace("${env.IS_CLEANING_NEEDED}")
         }
     }
 }
