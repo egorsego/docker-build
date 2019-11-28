@@ -106,11 +106,13 @@ pipeline{
         stage("SSH Test"){
             steps{
                 echo "Testing SSH Connection"
-
-                sh '''
-                    ssh -tt root@192.168.242.180
+                script{
+                    sh '''
+                    ssh -tt root@192.168.242.180 << EOF
                     ls -la
-                '''
+                    exit
+                    EOF'''
+                }
             }
         }
     }
