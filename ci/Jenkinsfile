@@ -108,10 +108,9 @@ pipeline{
                 echo "Testing SSH Connection"
                 script{
                     sh '''
-                    ssh -tt root@192.168.242.180 << EOF
+                    ssh -tt root@192.168.242.180 &&
                     ls -la
-                    exit
-                    EOF'''
+                    '''
                 }
             }
         }
