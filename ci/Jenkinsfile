@@ -44,7 +44,7 @@ pipeline{
                 sh 'mkdir -p ./FisGo/PATCH/lib'
                 sh 'cd /'
                 sh 'ls -la ./FisGo/PATCH/lib'
-                //sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
             }
 
             post{
