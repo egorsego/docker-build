@@ -77,16 +77,12 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
-                sh "cd /"
-                sh "cd FisGo"
-                sh "ls -la"
+                sh "ls -la ./FisGo"
                 sh "mkdir -p ./FisGo/build/fiscat"
-                sh "cd build"
-                sh "ls -la"
-                sh "cd fiscat"
-                sh "ls -la"
+                sh "ls -la ./FisGo/build"
+                sh "ls -la ./FisGo/build/fiscat"
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
-                sh "ls -la"
+                sh "ls -la ./FisGo/build/fiscat"
             }
 
             post{
