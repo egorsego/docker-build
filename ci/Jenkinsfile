@@ -48,6 +48,7 @@ pipeline{
                 sh 'cd /'
                 sh 'ls -la ./FisGo/PATCH/lib'
                 sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                sh 'ls -la ./FisGo/PATCH/lib'
             }
 
             post{
@@ -86,7 +87,6 @@ pipeline{
                 }
             }
         }
-
 
         stage('Build Units Test Image'){
             steps{
@@ -128,6 +128,7 @@ pipeline{
             echo 'Cleaning up workspace...' 
             script{
                 if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
+                    echo 'Clean up in progress...'
                     cleanWs()
                 }
             }
