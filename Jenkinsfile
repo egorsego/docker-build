@@ -123,12 +123,8 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
-            script{
-                println(env.IS_CLEANING_NEEDED)
-                if(env.IS_CLEANING_NEEDED == true) {
-                    cleanWs()
-                }
-            }
+            echo 'Environment var: ${env.IS_CLEANING_NEEDED}'
+            cleanWorkSpace(${env.IS_CLEANING_NEEDED})
         }
     }
 }
@@ -137,4 +133,10 @@ void removeUnusedContainersAndDanglingImages() {
     echo 'Removing dangling images...' 
     sh 'docker container prune --force'
     sh 'docker image prune --filter "dangling=true" --force'
+}
+
+void cleanWorkSpace(boolean isNeeded) {
+    if(isNeeded){
+        cleanWs()
+    }
 }
