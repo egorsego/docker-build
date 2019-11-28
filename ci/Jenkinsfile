@@ -123,8 +123,9 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
+            echo "${IS_WORKSPACE_CLEANING_NEEDED}"
             script{
-                if("${IS_WORKSPACE_CLEANING_NEEDED}".equals("Yes")){
+                if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes")){
                     cleanWs()
                 }
             }
