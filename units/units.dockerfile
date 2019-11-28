@@ -7,3 +7,4 @@ RUN     sed 's/#add_definitions(-DG_UNIT)/add_definitions(-DG_UNIT)/g' -i CMakeL
 WORKDIR /tmp/FisGo/build
 RUN     cmake ..
 RUN     make -j4
+RUN     ls -la

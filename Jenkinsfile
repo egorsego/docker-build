@@ -42,6 +42,8 @@ pipeline{
                 }
 
                 sh 'mkdir -p ./FisGo/PATCH/lib'
+                sh 'cd ./FisGo/PATCH/lib'
+                sh 'ls -la'
                 sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
             }
 
@@ -63,8 +65,15 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo 'Copying files from image...'
+                sh 'cd ./FisGo/'
+                sh 'ls -la'
                 sh 'mkdir -p ./FisGo/build/fiscat'
+                sh 'cd ./build'
+                sh 'ls -la'
+                sh 'cd ./fiscat'
+                sh 'ls -la'
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
+                sh 'ls -la'
             }
 
             post{
@@ -104,7 +113,8 @@ pipeline{
 
                 //sh 'touch test_file_2711'
                 //sh 'scp ./test_file_2711 root@192.168.242.180:/FisGo'
-                sh 'ssh -tt root@192.168.242.180 "ls -la"'
+                sh 'ssh -tt root@192.168.242.180'
+                sh 'ls -la'
             }
         }
     }
@@ -112,7 +122,7 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
-            cleanWs()
+            //cleanWs()
         }
     }
 }

@@ -5,3 +5,4 @@ ENV     LD_LIBRARY_PATH=/usr/local/usr/lib/
 WORKDIR /tmp/FisGo/build
 RUN     cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=On ..
 RUN     make -j4
+RUN     ls -la
