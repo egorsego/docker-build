@@ -20,7 +20,7 @@ pipeline{
             steps{
                 echo 'Building DreamkasRfCompiler image...'
                 script {
-                    docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/rf_compiler/compiler.dockerfile .")
+                    docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/rf_compiler/compiler.dockerfile .")
                 }
             }
 
@@ -38,7 +38,7 @@ pipeline{
 
                 echo 'Building DreamkasSFLibrary image...'
                 script {
-                    docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/sf_library/library.dockerfile .")
+                    docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/sf_library/library.dockerfile .")
                 }
 
                 sh 'mkdir -p ./FisGo/PATCH/lib'
@@ -58,7 +58,7 @@ pipeline{
             steps{
                 echo 'Building Fiscat image...'
                 script {
-                    docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/fiscat/fiscat.dockerfile .")
+                    docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/fiscat/fiscat.dockerfile .")
                 }
 
                 echo 'Examining files after compilation...'
@@ -89,7 +89,7 @@ pipeline{
             steps{
                 echo 'Building Units Test image...'
                 script {
-                    docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/units/units.dockerfile .")
+                    docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/units/units.dockerfile .")
                 }
 
                 echo 'Examining files after compilation...'
@@ -123,7 +123,8 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
-            //cleanWs()
+            echo 'Environment var: ${env.IS_CLEANING_NEEDED}'
+            cleanWorkSpace(${env.IS_CLEANING_NEEDED})
         }
     }
 }
@@ -132,4 +133,10 @@ void removeUnusedContainersAndDanglingImages() {
     echo 'Removing dangling images...' 
     sh 'docker container prune --force'
     sh 'docker image prune --filter "dangling=true" --force'
+}
+
+void cleanWorkSpace(boolean isNeeded) {
+    if(isNeeded){
+        cleanWs()
+    }
 }
