@@ -48,15 +48,9 @@ pipeline{
                 sh "docker run --name libraryContainer ${libraryImageTitle}:latest ls -la /tmp/FisGo"
 
                 sh "mkdir -p ./FisGo/PATCH2"
-                sh "docker cp libraryContainer:/tmp/FisGo ./FisGo/PATCH2"
-                sh "find ./FisGo/PATCH2 -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
-                sh "rm -r ./FisGo/PATCH2"
-                
-                //sh "mkdir -p ./FisGo/PATCH/lib"
-                //sh "cd /"
-                //sh "ls -la ./FisGo/PATCH/lib"
-                //sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
-                //sh "ls -la ./FisGo/PATCH/lib"
+                sh "docker cp libraryContainer:/tmp/FisGo ./FisGo/tmp"
+                sh "find ./FisGo/tmp -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                sh "rm -r ./FisGo/tmp"
             }
 
             post{
@@ -77,11 +71,10 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
-                sh "ls -la ./FisGo"
                 sh "mkdir -p ./FisGo/build/fiscat"
-                sh "ls -la ./FisGo/build"
-                sh "ls -la ./FisGo/build/fiscat"
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
+                
+                sh "ls -la ./FisGo/build"
                 sh "ls -la ./FisGo/build/fiscat"
             }
 
