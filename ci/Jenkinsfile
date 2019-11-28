@@ -46,13 +46,17 @@ pipeline{
 
                 echo "Examining files after compilation..."
                 sh "docker run --name libraryContainer ${libraryImageTitle}:latest ls -la /tmp/FisGo"
-                sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH/lib"
 
-                sh "mkdir -p ./FisGo/PATCH/lib"
-                sh "cd /"
-                sh "ls -la ./FisGo/PATCH/lib"
-                sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
-                sh "ls -la ./FisGo/PATCH/lib"
+                sh "mkdir -p ./FisGo/PATCH2"
+                sh "docker cp libraryContainer:/tmp/FisGo ./FisGo/PATCH2"
+                sh "find ./FisGo/PATCH2 -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                sh "rm -r ./FisGo/PATCH2"
+                
+                //sh "mkdir -p ./FisGo/PATCH/lib"
+                //sh "cd /"
+                //sh "ls -la ./FisGo/PATCH/lib"
+                //sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                //sh "ls -la ./FisGo/PATCH/lib"
             }
 
             post{
