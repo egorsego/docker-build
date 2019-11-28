@@ -18,6 +18,9 @@ pipeline{
  
         stage('Build Compiler Image'){
             steps{
+                //echo 'Removing old Compiler image...'
+                //sh "docker rmi ${compilerImageTitle}:latest || true"
+
                 echo 'Building DreamkasRfCompiler image...'
                 script {
                     docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/rf_compiler/compiler.dockerfile .")
