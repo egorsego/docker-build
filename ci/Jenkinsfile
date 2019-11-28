@@ -15,7 +15,7 @@ pipeline{
                 }
             }
         }
-  /*
+ 
         stage('Build Compiler Image'){
             steps{
                 echo 'Building DreamkasRfCompiler image...'
@@ -44,7 +44,7 @@ pipeline{
                 sh 'mkdir -p ./FisGo/PATCH/lib'
                 sh 'cd /'
                 sh 'ls -la ./FisGo/PATCH/lib'
-                sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                //sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
             }
 
             post{
@@ -53,7 +53,7 @@ pipeline{
                 }
             }
         }
-
+ /*
         stage('Build Fiscat Image'){
             steps{
                 echo 'Building Fiscat image...'
@@ -123,7 +123,6 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
-            echo "${IS_WORKSPACE_CLEANING_NEEDED}"
             script{
                 if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
                     cleanWs()
