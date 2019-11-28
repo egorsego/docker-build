@@ -102,8 +102,9 @@ pipeline{
             steps{
                 echo 'Testing SSH Connection'
 
-                sh 'touch test_file_2711'
-                sh 'scp ./test_file_2711 root@192.168.242.180:/FisGo'
+                //sh 'touch test_file_2711'
+                //sh 'scp ./test_file_2711 root@192.168.242.180:/FisGo'
+                sh 'ssh -tt root@192.168.242.180 "ls -la"'
             }
         }
     }
