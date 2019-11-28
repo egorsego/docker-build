@@ -125,7 +125,7 @@ pipeline{
             echo 'Cleaning up workspace...' 
             echo "${IS_WORKSPACE_CLEANING_NEEDED}"
             script{
-                if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes")){
+                if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
                     cleanWs()
                 }
             }
