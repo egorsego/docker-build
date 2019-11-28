@@ -42,8 +42,8 @@ pipeline{
                 }
 
                 sh 'mkdir -p ./FisGo/PATCH/lib'
-                sh 'cd ./FisGo/PATCH/lib'
-                sh 'ls -la'
+                sh 'cd /'
+                sh 'ls -la ./FisGo/PATCH/lib'
                 sh "find . -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
             }
 
@@ -65,6 +65,7 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo 'Copying files from image...'
+                sh 'cd /'
                 sh 'cd ./FisGo/'
                 sh 'ls -la'
                 sh 'mkdir -p ./FisGo/build/fiscat'
