@@ -71,7 +71,8 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
-                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
+                sh "mkdir -p ./FisGo/build"
+                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build"
             }
 
             post{
@@ -92,7 +93,7 @@ pipeline{
                 sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
-                sh "docker cp unitsContainer:/tmp/FisGo/build ./FisGo/build/fiscat/units"
+                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/build"
             }
 
             post{
