@@ -65,7 +65,7 @@ pipeline{
                 }
             }
         }
- /*
+ 
         stage("Build Fiscat Image"){
             steps{
                 echo "Building Fiscat image..."
@@ -95,7 +95,7 @@ pipeline{
                 }
             }
         }
-
+/*
         stage("Build Units Test Image"){
             steps{
                 echo "Building Units Test image..."
