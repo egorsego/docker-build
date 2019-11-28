@@ -124,8 +124,9 @@ pipeline{
         always{
             echo 'Cleaning up workspace...' 
             script{
-                if(${env.IS_CLEANING_NEEDED})
-                cleanWs()
+                if(env.IS_CLEANING_NEEDED) {
+                    cleanWs()
+                }
             }
         }
     }
