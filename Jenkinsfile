@@ -6,7 +6,7 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-  /*      
+      
         stage('Clone FisGo_F Repository'){
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
@@ -15,7 +15,7 @@ pipeline{
                 }
             }
         }
-
+  /*
         stage('Build Compiler Image'){
             steps{
                 echo 'Building DreamkasRfCompiler image...'
@@ -112,10 +112,10 @@ pipeline{
             steps{
                 echo 'Testing SSH Connection'
 
-                sh 'touch test_file_2811'
-                sh 'scp ./test_file_2811 root@192.168.242.180:/FisGo'
+                //sh 'touch test_file_2811'
+                //sh 'scp ./test_file_2811 root@192.168.242.180:/FisGo'
                 //sh 'ssh -tt root@192.168.242.180'
-                //sh 'ls -la'
+                //'ls -la'
             }
         }
     }
