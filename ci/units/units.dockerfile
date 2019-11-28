@@ -5,7 +5,5 @@ ENV     LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/usr/lib/
 WORKDIR /tmp/FisGo
 RUN     sed 's/#add_definitions(-DG_UNIT)/add_definitions(-DG_UNIT)/g' -i CMakeLists.txt
 WORKDIR /tmp/FisGo/build
-RUN     ls -la
 RUN     cmake ..
 RUN     make -j4
-RUN     ls -la
