@@ -6,7 +6,7 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-        
+  /*      
         stage('Clone FisGo_F Repository'){
             steps{
                 echo 'Checking out FisGo-F Library repository code...'
@@ -84,7 +84,7 @@ pipeline{
             }
         }
 
-/*
+
         stage('Build Units Test Image'){
             steps{
                 echo 'Building Units Test image...'
@@ -123,7 +123,7 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
-            //cleanWs()
+            cleanWs()
         }
     }
 }
