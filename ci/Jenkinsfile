@@ -123,8 +123,11 @@ pipeline{
     post{
         always{
             echo 'Cleaning up workspace...' 
-            echo 'Environment var: ${env.IS_CLEANING_NEEDED}'
-            cleanWorkSpace("${env.IS_CLEANING_NEEDED}")
+            echo "Environment var: ${IS_CLEANING_NEEDED}"
+            script{
+                cleanWorkSpace("${IS_CLEANING_NEEDED}")
+            }
+            
         }
     }
 }
