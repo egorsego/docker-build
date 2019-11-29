@@ -106,6 +106,7 @@ pipeline{
         stage("SSH Test"){
             steps{
                 echo "Testing SSH Connection"
+                //sh "scp ./test_file_2811 root@192.168.242.180:/FisGo"
                 sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
             }
         }
