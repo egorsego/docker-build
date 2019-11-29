@@ -54,6 +54,10 @@ pipeline{
             }
 
             post{
+                success{
+                    archiveArtifacts artifacts: './FisGo/PATCH/*'
+                }
+
                 always{
                     removeUnusedContainersAndDanglingImages()
                 }
@@ -72,10 +76,14 @@ pipeline{
 
                 echo "Copying files from image..."
                 sh "mkdir -p ./FisGo/build"
-                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build"
+                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
             }
 
             post{
+                success{
+                    archiveArtifacts artifacts: './FisGo/build/fiscat/*'
+                }
+
                 always{
                     removeUnusedContainersAndDanglingImages()
                 }
@@ -94,10 +102,14 @@ pipeline{
                 sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
-                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/build"
+                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/build/units"
             }
 
             post{
+                success{
+                    archiveArtifacts artifacts: './FisGo/build/units/*'
+                }
+
                 always{
                     removeUnusedContainersAndDanglingImages()
                 }
