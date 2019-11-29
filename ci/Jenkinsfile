@@ -55,7 +55,7 @@ pipeline{
 
             post{
                 success{
-                    //echo "Archiving artifacts..."
+                    echo "Archiving artifacts..."
                     //archiveArtifacts artifacts: "**/FisGo/PATCH/lib/**/*"
                 }
                 always{
@@ -81,7 +81,7 @@ pipeline{
 
             post{
                 success{
-                    //echo "Archiving artifacts..."
+                    echo "Archiving artifacts..."
                     //archiveArtifacts artifacts: "**/FisGo/build/fiscat/*"
                 }
                 always{
@@ -108,7 +108,7 @@ pipeline{
             post{
                 success{
                     echo "Archiving artifacts..."
-                    archiveArtifacts artifacts: "/FisGo/build/units/*"
+                    //archiveArtifacts artifacts: "/FisGo/build/units/*"
                 }
                 always{
                     removeUnusedContainersAndDanglingImages()
