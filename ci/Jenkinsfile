@@ -12,7 +12,7 @@ pipeline{
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGoTests.git", branch: "master"
                 }
                 sh '''
-                    cd {env.WORKSPACE}/AutoTests
+                    cd ${env.WORKSPACE}/AutoTests
                     mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/dkf.xml
                 '''
             }
@@ -21,10 +21,9 @@ pipeline{
     
     post{
         always{
-            echo "Cleaning up workspace..." 
             script{
                 if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
-                    echo "Clean up in progress..."
+                    echo "Cleaning up workspace..." 
                     cleanWs()
                 }
             }
