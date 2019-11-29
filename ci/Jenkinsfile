@@ -55,7 +55,7 @@ pipeline{
 
             post{
                 success{
-                    archiveArtifacts artifacts: "**/FisGo/PATCH/lib/*"
+                    archiveArtifacts artifacts: "**/FisGo/PATCH/lib/**/*"
                 }
 
                 always{
@@ -75,7 +75,7 @@ pipeline{
                 sh "docker run --name fiscatContainer ${fiscatImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
-                sh "mkdir -p ./FisGo/build"
+                sh "mkdir -p ./FisGo/build/fiscat"
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
             }
 
@@ -102,6 +102,7 @@ pipeline{
                 sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
 
                 echo "Copying files from image..."
+                sh "mkdir -p ./FisGo/build/units"
                 sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/build/units"
             }
 
