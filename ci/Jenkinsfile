@@ -89,7 +89,7 @@ pipeline{
                 }
             }
         }
- 
+/* 
         stage("Build Units Test Image"){
             steps{
                 echo "Building Units Test image..."
@@ -123,7 +123,7 @@ pipeline{
                 //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
             }
         }
-
+*/
         stage("Test"){
             steps{
                 dir("AutoTests"){
