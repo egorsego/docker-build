@@ -7,17 +7,6 @@ pipeline{
     agent any
     stages{
 
-        stage("Workspace Cleanup"){
-            steps{
-                script{
-                    if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
-                        echo "Cleaning up workspace..." 
-                        cleanWs()
-                    }
-                }
-            }
-        }
-
         stage("Clone FisGo_F Repository"){
             steps{
                 echo "Checking out FisGo-F Library repository code..."
@@ -149,6 +138,17 @@ pipeline{
             post{
                 always{
                     allure includeProperties: false, jdk: '', results: [[path: '**/target/allure-results']]
+                }
+            }
+        }
+    }
+    
+    post{
+        always{
+            script{
+                if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
+                    echo "Cleaning up workspace..." 
+                    cleanWs()
                 }
             }
         }
