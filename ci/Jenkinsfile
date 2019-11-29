@@ -6,7 +6,6 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-     
         stage("Clone FisGo_F Repository"){
             steps{
                 echo "Checking out FisGo-F Library repository code..."
@@ -55,6 +54,7 @@ pipeline{
 
             post{
                 success{
+                    echo "Archiving artifacts..."
                     archiveArtifacts artifacts: "**/FisGo/PATCH/lib/**/*"
                 }
 
@@ -81,6 +81,7 @@ pipeline{
 
             post{
                 success{
+                    echo "Archiving artifacts..."
                     archiveArtifacts artifacts: "**/FisGo/build/fiscat/*"
                 }
 
@@ -108,6 +109,7 @@ pipeline{
 
             post{
                 success{
+                    echo "Archiving artifacts..."
                     archiveArtifacts artifacts: "/FisGo/build/units/*"
                 }
 
@@ -116,12 +118,25 @@ pipeline{
                 }
             }
         }
-*/
+
         stage("SSH Test"){
             steps{
                 echo "Testing SSH Connection"
                 //sh "scp ./test_file_2811 root@192.168.242.180:/FisGo"
                 //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
+            }
+        }
+*/
+
+        stage("Test"){
+            steps{
+                dir("AutoTests"){
+                    git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGoTests.git", branch: "master"
+                }
+                sh '''
+                    cd {env.WORKSPACE}/AutoTests
+                    mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/dkf.xml
+                '''
             }
         }
     }
@@ -135,7 +150,6 @@ pipeline{
                     cleanWs()
                 }
             }
-            
         }
     }
 }
