@@ -6,6 +6,7 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
+/*
         stage("Clone FisGo_F Repository"){
             steps{
                 echo "Checking out FisGo-F Library repository code..."
@@ -54,8 +55,8 @@ pipeline{
 
             post{
                 success{
-                    echo "Archiving artifacts..."
-                    archiveArtifacts artifacts: "**/FisGo/PATCH/lib/**/*"
+                    //echo "Archiving artifacts..."
+                    //archiveArtifacts artifacts: "**/FisGo/PATCH/lib/**/*"
                 }
 
                 always{
@@ -81,8 +82,8 @@ pipeline{
 
             post{
                 success{
-                    echo "Archiving artifacts..."
-                    archiveArtifacts artifacts: "**/FisGo/build/fiscat/*"
+                    //echo "Archiving artifacts..."
+                    //archiveArtifacts artifacts: "**/FisGo/build/fiscat/*"
                 }
 
                 always{
@@ -90,8 +91,7 @@ pipeline{
                 }
             }
         }
-
-/* 
+ 
         stage("Build Units Test Image"){
             steps{
                 echo "Building Units Test image..."
