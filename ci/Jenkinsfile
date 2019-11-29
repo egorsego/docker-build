@@ -55,7 +55,7 @@ pipeline{
 
             post{
                 success{
-                    archiveArtifacts artifacts: '/FisGo/PATCH/**/*.*'
+                    archiveArtifacts artifacts: '/FisGo/PATCH/**/so.*'
                 }
 
                 always{
