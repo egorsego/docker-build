@@ -48,7 +48,7 @@ pipeline{
                 sh "docker run --name libraryContainer ${libraryImageTitle}:latest ls -la /tmp/FisGo"
 
                 echo "Copying files from image..."
-                sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH/lib"
+                sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH"
                 //sh "find ./FisGo/tmp -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
                 //sh "rm -r ./FisGo/tmp"
             }
@@ -108,7 +108,7 @@ pipeline{
             steps{
                 echo "Testing SSH Connection"
                 //sh "scp ./test_file_2811 root@192.168.242.180:/FisGo"
-                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
+                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
             }
         }
     }
