@@ -16,8 +16,8 @@ pipeline{
                     mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/dkf.xml
                 '''
             }
-        }
-        post{
+
+            post{
             always{
                 allure includeProperties: false, jdk: '', results: [[path: '/AutoTests/target/allure-results']]
             }
