@@ -9,7 +9,7 @@ pipeline{
         stage("Test"){
             steps{
                 dir("AutoTests"){
-                    git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGoTests.git", branch: "master"
+                    git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/fisgo_test.git", branch: "master"
                 }
                 sh '''
                     cd ./AutoTests
