@@ -6,7 +6,7 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-/*      
+     
         stage("Clone FisGo_F Repository"){
             steps{
                 echo "Checking out FisGo-F Library repository code..."
@@ -48,9 +48,9 @@ pipeline{
                 sh "docker run --name libraryContainer ${libraryImageTitle}:latest ls -la /tmp/FisGo"
 
                 echo "Copying files from image..."
-                sh "docker cp libraryContainer:/tmp/FisGo ./FisGo/tmp"
-                sh "find ./FisGo/tmp -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
-                sh "rm -r ./FisGo/tmp"
+                sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH/lib"
+                //sh "find ./FisGo/tmp -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
+                //sh "rm -r ./FisGo/tmp"
             }
 
             post{
@@ -82,6 +82,7 @@ pipeline{
             }
         }
 
+/* 
         stage("Build Units Test Image"){
             steps{
                 echo "Building Units Test image..."
