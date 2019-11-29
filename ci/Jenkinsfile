@@ -106,7 +106,7 @@ pipeline{
         stage("SSH Test"){
             steps{
                 echo "Testing SSH Connection"
-                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash/test_script.sh"
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
             }
         }
     }
