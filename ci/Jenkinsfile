@@ -12,7 +12,7 @@ pipeline{
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGoTests.git", branch: "master"
                 }
                 sh '''
-                    cd ${env.WORKSPACE}/AutoTests
+                    cd ./AutoTests
                     mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/dkf.xml
                 '''
             }
