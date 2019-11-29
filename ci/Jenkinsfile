@@ -106,6 +106,10 @@ pipeline{
         stage("SSH Test"){
             steps{
                 echo "Testing SSH Connection"
+                
+                sh "ssh root@192.168.242.180 < ${env.WORKSPACE}/ci/bash/test_script.sh"
+                
+                
                 script{
                     sh '''
                     ssh root@192.168.242.180 ; ls -la
