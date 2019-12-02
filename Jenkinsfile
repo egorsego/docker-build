@@ -7,9 +7,15 @@ pipeline{
     agent any
     stages{
 
-        stage("Clone FisGo_F Repository"){
+        stage("Checkout"){
             steps{
-                echo "Checking out FisGo-F Library repository code..."
+
+                echo "Cloning FisGo-CI repository code..."
+                dir("ci") {
+                    git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_F.git", branch: "develop"
+                }
+
+                echo "Cloning FisGo-F Library repository code..."
                 dir("FisGo") {
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_F.git", branch: "develop"
                 }
