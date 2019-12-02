@@ -7,12 +7,23 @@ pipeline{
     agent any
     stages{
 
+        stage("Workspace Cleanup"){
+            steps{
+                script{
+                    if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
+                        echo "Cleaning up workspace..." 
+                        cleanWs()
+                    }
+                }
+            }
+        }
+        
         stage("Checkout"){
             steps{
 
                 echo "Cloning FisGo-CI repository code..."
                 dir("ci") {
-                    git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_F.git", branch: "develop"
+                    git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/docker-build.git", branch: "master"
                 }
 
                 echo "Cloning FisGo-F Library repository code..."
@@ -144,17 +155,6 @@ pipeline{
             post{
                 always{
                     allure includeProperties: false, jdk: '', results: [[path: '**/target/allure-results']]
-                }
-            }
-        }
-    }
-    
-    post{
-        always{
-            script{
-                if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
-                    echo "Cleaning up workspace..." 
-                    cleanWs()
                 }
             }
         }
