@@ -131,23 +131,34 @@ pipeline{
             }
         }
 */
-        stage("Delete list Creation"){
+        stage("Patch Cashbox"){
             steps{
+                echo "Creating delete list file..."
                 sh '''
                     cd ./FisGo/PATCH/
                     find . -type f -not -path "*etc/init.*" > ../deleteList
                 '''
-            }
-        }
-
-        stage("SSH Test"){
-            steps{
-                echo "Copying delete list to Cashbox"
+                
+                echo "Copying delete list file to Cashbox..."
                 sh "scp ./FisGo/deleteList root@192.168.242.180:/"
-                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
+
+                echo "Shutting down fiscat..."
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/shutdown_fiscat.sh"
+                
+                echo "Removing files..."
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/delete_files.sh"
+
+                echo "Patching files..."
+                sh "scp -r ./FisGo/PATCH/. root@192.168.242.180:/"
+
+                echo "Setting up file permissions..."
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/apply_permissions.sh"
+
+                echo "Rebooting fiscat..."
+                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/reboot_fiscat.sh"
             }
         }
-    
+   
         stage("Test"){
             steps{
                 dir("AutoTests"){
