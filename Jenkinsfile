@@ -130,14 +130,6 @@ pipeline{
                 }
             }
         }
-
-        stage("SSH Test"){
-            steps{
-                echo "Testing SSH Connection"
-                //sh "scp ./test_file_2811 root@192.168.242.180:/FisGo"
-                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
-            }
-        }
 */
         stage("Delete list Creation"){
             steps{
@@ -145,6 +137,14 @@ pipeline{
                     cd ./FisGo/PATCH/
                     find . -type f -not -path "*etc/init.*" > ../deleteList
                 '''
+            }
+        }
+
+        stage("SSH Test"){
+            steps{
+                echo "Copying delete list to Cashbox"
+                sh "scp ./FisGo/deleteList root@192.168.242.180:/"
+                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/test_script.sh"
             }
         }
     
