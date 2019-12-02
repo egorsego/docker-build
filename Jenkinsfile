@@ -66,14 +66,12 @@ pipeline{
 
                 echo "Copying files from image..."
                 sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH"
-                //sh "find ./FisGo/tmp -type f -name '*.so' -exec cp '{}' ./FisGo/PATCH/lib/ ';'"
-                //sh "rm -r ./FisGo/tmp"
             }
 
             post{
                 success{
                     echo "Archiving artifacts..."
-                    //archiveArtifacts artifacts: "**/FisGo/PATCH/lib/**/*"
+                    archiveArtifacts artifacts: "**/FisGo/PATCH/**/*"
                 }
                 always{
                     removeUnusedContainersAndDanglingImages()
@@ -93,13 +91,13 @@ pipeline{
 
                 echo "Copying files from image..."
                 sh "mkdir -p ./FisGo/build/fiscat"
-                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/build/fiscat"
+                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/PATCH/FisGo"
             }
 
             post{
                 success{
                     echo "Archiving artifacts..."
-                    //archiveArtifacts artifacts: "**/FisGo/build/fiscat/*"
+                    archiveArtifacts artifacts: "**/FisGo/PATCH/FisGo/fiscat"
                 }
                 always{
                     removeUnusedContainersAndDanglingImages()
@@ -119,13 +117,13 @@ pipeline{
 
                 echo "Copying files from image..."
                 sh "mkdir -p ./FisGo/build/units"
-                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/build/units"
+                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/PATCH/FisGo"
             }
 
             post{
                 success{
                     echo "Archiving artifacts..."
-                    //archiveArtifacts artifacts: "/FisGo/build/units/*"
+                    //archiveArtifacts artifacts: "/FisGo/PATCH/FisGo/units"
                 }
                 always{
                     removeUnusedContainersAndDanglingImages()
@@ -141,6 +139,15 @@ pipeline{
             }
         }
 */
+        stage("Delete list Creation"){
+            steps{
+                sh '''
+                    cd ./FisGo/PATCH/
+                    find . -type f -not -path "*etc/init.*" > ../deleteList
+                '''
+            }
+        }
+    
         stage("Test"){
             steps{
                 dir("AutoTests"){
