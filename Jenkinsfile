@@ -33,7 +33,7 @@ pipeline{
             }
         }
  
-        stage("Build Compiler Image"){
+        stage("Build"){
             steps{
                 echo 'Removing old Compiler image...'
                 sh "docker rmi ${compilerImageTitle}:latest || true"
@@ -42,17 +42,7 @@ pipeline{
                 script {
                     docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/rf_compiler/compiler.dockerfile .")
                 }
-            }
 
-            post{
-                always{
-                    removeUnusedContainersAndDanglingImages()
-                }
-            }
-        }
-
-        stage("Build Library Image"){
-            steps{
                 echo "Removing old Library image..."
                 sh "docker rmi ${libraryImageTitle}:latest || true" 
 
@@ -66,21 +56,7 @@ pipeline{
 
                 echo "Copying files from image..."
                 sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH"
-            }
 
-            post{
-                success{
-                    echo "Archiving artifacts..."
-                    archiveArtifacts artifacts: "**/FisGo/PATCH/**/*"
-                }
-                always{
-                    removeUnusedContainersAndDanglingImages()
-                }
-            }
-        }
- 
-        stage("Build Fiscat Image"){
-            steps{
                 echo "Building Fiscat image..."
                 script {
                     docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/fiscat/fiscat.dockerfile .")
@@ -95,12 +71,12 @@ pipeline{
             }
 
             post{
-                success{
-                    echo "Archiving artifacts..."
-                    archiveArtifacts artifacts: "**/FisGo/PATCH/FisGo/fiscat"
-                }
                 always{
                     removeUnusedContainersAndDanglingImages()
+                }
+                success{
+                    echo "Archiving artifacts..."
+                    archiveArtifacts artifacts: "**/FisGo/PATCH/**/*"
                 }
             }
         }
@@ -131,7 +107,7 @@ pipeline{
             }
         }
 */
-        stage("Patch Cashbox"){
+        stage("Patch"){
             steps{
                 echo "Creating delete list file..."
                 sh '''
@@ -139,13 +115,13 @@ pipeline{
                     find . -type f -not -path "*etc/init.*" > ../deleteList
                 '''
                 
-                echo "Copying delete list file to Cashbox..."
+                echo "Copying deletelist to Cashbox..."
                 sh "scp ./FisGo/deleteList root@192.168.242.180:/"
 
                 echo "Shutting down fiscat..."
                 sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/shutdown_fiscat.sh"
                 
-                echo "Removing files..."
+                echo "Removing files present in deletelist..."
                 sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/delete_files.sh"
 
                 echo "Patching files..."
