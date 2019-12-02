@@ -140,13 +140,13 @@ pipeline{
                 '''
                 
                 echo "Copying delete list file to Cashbox..."
-                //sh "scp ./FisGo/deleteList root@192.168.242.180:/"
+                sh "scp ./FisGo/deleteList root@192.168.242.180:/"
 
                 echo "Shutting down fiscat..."
                 sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/shutdown_fiscat.sh"
                 
                 echo "Removing files..."
-                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/delete_files.sh"
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/delete_files.sh"
 
                 echo "Patching files..."
                 sh "scp -r ./FisGo/PATCH/. root@192.168.242.180:/"
@@ -154,8 +154,11 @@ pipeline{
                 echo "Setting up file permissions..."
                 sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/apply_permissions.sh"
 
-                echo "Rebooting fiscat..."
-                //sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/reboot_fiscat.sh"
+                echo "Restarting fiscat..."
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/restart_fiscat.sh"
+
+                echo "Removing deleteList file..."
+                sh "ssh -T root@192.168.242.180 < ${env.WORKSPACE}/ci/bash_scripts/remove_deletelist.sh"
             }
         }
    
