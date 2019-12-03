@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /
-cat ./deleteList | xargs rm -f || true
+cat ./deleteList | xargs rm || true
