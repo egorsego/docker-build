@@ -6,26 +6,9 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-
-        stage("Workspace Cleanup"){
-            steps{
-                script{
-                    if("${IS_WORKSPACE_CLEANING_NEEDED}" == "Yes"){
-                        echo "Cleaning up workspace..." 
-                        cleanWs()
-                    }
-                }
-            }
-        }
-        
+      
         stage("Checkout"){
             steps{
-
-                echo "Cloning FisGo-CI repository code..."
-                dir("ci") {
-                    git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/docker-build.git", branch: "dev"
-                }
-
                 echo "Cloning FisGo-F Library repository code..."
                 dir("FisGo") {
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_F.git", branch: "develop"
