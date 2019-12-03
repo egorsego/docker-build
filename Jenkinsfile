@@ -43,6 +43,8 @@ pipeline{
                     docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/rf_compiler/compiler.dockerfile .")
                 }
 
+                echo "============================="
+
                 echo "Removing old Library image..."
                 sh "docker rmi ${libraryImageTitle}:latest || true" 
 
@@ -57,6 +59,8 @@ pipeline{
                 echo "Copying files from image..."
                 sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH"
 
+                echo "============================="
+
                 echo "Building Fiscat image..."
                 script {
                     docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/fiscat/fiscat.dockerfile .")
@@ -68,6 +72,22 @@ pipeline{
                 echo "Copying files from image..."
                 sh "mkdir -p ./FisGo/build/fiscat"
                 sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/PATCH/FisGo"
+
+/*
+                echo "============================="
+
+                echo "Building Units Test image..."
+                script {
+                    docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/units/units.dockerfile .")
+                }
+
+                echo "Examining files after compilation..."
+                sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
+
+                echo "Copying files from image..."
+                sh "mkdir -p ./FisGo/build/units"
+                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/PATCH/FisGo"
+*/
             }
 
             post{
@@ -80,33 +100,7 @@ pipeline{
                 }
             }
         }
-/* 
-        stage("Build Units Test Image"){
-            steps{
-                echo "Building Units Test image..."
-                script {
-                    docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/ci/units/units.dockerfile .")
-                }
 
-                echo "Examining files after compilation..."
-                sh "docker run --name unitsContainer ${unitsTestImageTitle}:latest ls -la /tmp/FisGo/build"
-
-                echo "Copying files from image..."
-                sh "mkdir -p ./FisGo/build/units"
-                sh "docker cp unitsContainer:/tmp/FisGo/build/units ./FisGo/PATCH/FisGo"
-            }
-
-            post{
-                success{
-                    echo "Archiving artifacts..."
-                    //archiveArtifacts artifacts: "/FisGo/PATCH/FisGo/units"
-                }
-                always{
-                    removeUnusedContainersAndDanglingImages()
-                }
-            }
-        }
-*/
         stage("Patch"){
             steps{
                 echo "Creating delete list file..."
