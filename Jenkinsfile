@@ -23,7 +23,7 @@ pipeline{
 
                 echo "Cloning FisGo-CI repository code..."
                 dir("ci") {
-                    git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/docker-build.git", branch: "master"
+                    git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/docker-build.git", branch: "dev"
                 }
 
                 echo "Cloning FisGo-F Library repository code..."
