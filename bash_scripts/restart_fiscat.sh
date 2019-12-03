@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd / 
-FisGo/fiscat
+FisGo/fiscat >>/FisGo/outf &
