@@ -11,7 +11,7 @@ pipeline{
             steps{
                 echo "${env.GIT_COMMIT}"
 
-                sh "${env.WORKSPACE}/ci/bash_scripts/restart_fiscat.sh"
+                sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh"
 
                 echo "Cloning FisGo-F Library repository code..."
                 dir("FisGo") {
