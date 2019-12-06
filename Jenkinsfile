@@ -11,7 +11,9 @@ pipeline{
             steps{
                 echo "${env.GIT_COMMIT}"
 
-                sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh"
+                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
+                    sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh $TOKEN"
+                }
 
                 echo "Cloning FisGo-F Library repository code..."
                 dir("FisGo") {
