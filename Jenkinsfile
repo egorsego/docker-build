@@ -6,14 +6,11 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-      
         stage("Checkout"){
             steps{
-                echo "${env.GIT_COMMIT}"
-
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh"
-		            sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh $TOKEN"
+                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_start.sh"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN 'Jenkins-CI: Checkout Stage'"
                 }
 
                 echo "Cloning FisGo-F Library repository code..."
@@ -25,14 +22,14 @@ pipeline{
             post{
                 success{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_success.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_success.sh $TOKEN"
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_success.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN 'Jenkins-CI: Checkout Stage'"
                     }
                 }
                 failure{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_failure.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_failure.sh $TOKEN"
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN 'Jenkins-CI: Checkout Stage'"
                     }
                 }
             }
@@ -41,8 +38,8 @@ pipeline{
         stage("Build"){
             steps{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/build_stage_start.sh"
-		            sh "${env.WORKSPACE}/ci/bash_scripts/build_stage_start.sh $TOKEN"
+                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_start.sh"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN 'Jenkins-CI: Build Stage'"
                 }
 
                 echo 'Removing old Compiler image...'
@@ -60,14 +57,14 @@ pipeline{
                 }
                 success{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/build_stage_success.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/build_stage_success.sh $TOKEN"
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_success.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN 'Jenkins-CI: Build Stage'"
                     }
                 }
                 failure{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/build_stage_failure.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/build_stage_failure.sh $TOKEN"
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN 'Jenkins-CI: Build Stage'"
                     }
                 }
             }
@@ -75,6 +72,11 @@ pipeline{
 
         stage("Test"){
             steps{
+                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_start.sh"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN 'Jenkins-CI: Test Stage'"
+                }
+
                 dir("AutoTests"){
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/fisgo_test.git", branch: "master"
                 }
@@ -84,10 +86,16 @@ pipeline{
 
             post{
                 success{
-                    echo "Actions on success"
+                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_success.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN 'Jenkins-CI: Test Stage'"
+                    }
                 }
                 failure{
-                    echo "Actions on failure"
+                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN 'Jenkins-CI: Test Stage'"
+                    }
                 }
             }
         }
