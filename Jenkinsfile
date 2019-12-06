@@ -12,7 +12,8 @@ pipeline{
                 echo "${env.GIT_COMMIT}"
 
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-                    sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh $TOKEN"
+                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh"
+		    sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh $TOKEN"
                 }
 
                 echo "Cloning FisGo-F Library repository code..."
