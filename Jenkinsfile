@@ -6,13 +6,11 @@ def unitsTestImageTitle = "dreamkas-units"
 pipeline{
     agent any
     stages{
-        stage("Checkout"){
-            def stageName = "Jenkins-CI: Checkout Stage"
-            
+        stage("Checkout"){           
             steps{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_start.sh"
-		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN ${stageName}"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
                 }
 
                 echo "Cloning FisGo-F Library repository code..."
@@ -25,25 +23,23 @@ pipeline{
                 success{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                         sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_success.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN ${stageName}"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
                     }
                 }
                 failure{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                         sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN ${stageName}"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
                     }
                 }
             }
         }
  
-        stage("Build"){
-            def stageName = "Jenkins-CI: Build Stage"
-            
+        stage("Build"){          
             steps{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_start.sh"
-		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN ${stageName}"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
                 }
 
                 echo 'Removing old Compiler image...'
@@ -62,25 +58,23 @@ pipeline{
                 success{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                         sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_success.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN ${stageName}"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
                     }
                 }
                 failure{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                         sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN ${stageName}"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
                     }
                 }
             }
         }
 
-        stage("Test"){
-            def stageName = "Jenkins-CI: Test Stage"
-            
+        stage("Test"){          
             steps{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_start.sh"
-		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN ${stageName}"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
                 }
 
                 dir("AutoTests"){
@@ -94,13 +88,13 @@ pipeline{
                 success{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                         sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_success.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN ${stageName}"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
                     }
                 }
                 failure{
                     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                         sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh"
-		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN ${stageName}"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
                     }
                 }
             }
