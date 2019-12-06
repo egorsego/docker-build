@@ -20,15 +20,6 @@ pipeline{
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_F.git", branch: "develop"
                 }
             }
-
-            post{
-                success{
-                    echo "Actions on success"
-                }
-                failure{
-                    echo "Actions on failure"
-                }
-            }
         }
  
         stage("Build"){
