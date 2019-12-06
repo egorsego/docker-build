@@ -40,6 +40,11 @@ pipeline{
  
         stage("Build"){
             steps{
+                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                    sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/build_stage_start.sh"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/build_stage_start.sh $TOKEN"
+                }
+
                 echo 'Removing old Compiler image...'
                 sh "docker rmi ${compilerImageTitle}:latest || true"
 
@@ -54,10 +59,16 @@ pipeline{
                     removeUnusedContainersAndDanglingImages()
                 }
                 success{
-                    echo "Actions on success"
+                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/build_stage_success.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/build_stage_success.sh $TOKEN"
+                    }
                 }
                 failure{
-                    echo "Actions on failure"
+                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/build_stage_failure.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/build_stage_failure.sh $TOKEN"
+                    }
                 }
             }
         }
