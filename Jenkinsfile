@@ -11,14 +11,29 @@ pipeline{
             steps{
                 echo "${env.GIT_COMMIT}"
 
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
+                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh"
-		    sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh $TOKEN"
+		            sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_start.sh $TOKEN"
                 }
 
                 echo "Cloning FisGo-F Library repository code..."
                 dir("FisGo") {
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_F.git", branch: "develop"
+                }
+            }
+
+            post{
+                success{
+                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_success.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_success.sh $TOKEN"
+                    }
+                }
+                failure{
+                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
+                        sh "chmod +x ${env.WORKSPACE}/ci/bash_scripts/checkout_stage_failure.sh"
+		                sh "${env.WORKSPACE}/ci/bash_scripts/checkout_stage_failure.sh $TOKEN"
+                    }
                 }
             }
         }
