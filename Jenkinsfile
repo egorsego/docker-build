@@ -37,7 +37,7 @@ pipeline{
             }
         }
  
-        stage("Build Compiler Image"){
+        stage("Build_Compiler_Image"){
             steps{
                 echo "Building compiler image..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -64,7 +64,7 @@ pipeline{
             }
         }
 
-        stage("Deploy Libraries"){
+        stage("Deploy_Libraries"){
             steps{
                 echo "Deploying libraries..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -94,7 +94,7 @@ pipeline{
             }
         }
 
-        stage("Compile Fiscat"){
+        stage("Compile_Fiscat"){
             steps{
                 echo "Compiling fiscat..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -124,7 +124,7 @@ pipeline{
             }
         }
 
-        stage("Compile Unit Tests"){
+        stage("Compile_Unit_Tests"){
             steps{
                 echo "Compiling unit tests..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -154,7 +154,7 @@ pipeline{
             }
         }
 
-        stage("Patch Cashbox"){
+        stage("Patch_Cashbox"){
             steps{
                 echo "Patching cashbox..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -188,7 +188,7 @@ pipeline{
             }
         }
 
-        stage("Run Unit Tests"){
+        stage("Run_Unit_Tests"){
             steps{
                 echo "Running unit tests..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -210,7 +210,7 @@ pipeline{
             }
         }
 
-        stage("Run System Tests"){
+        stage("Run_System_Tests"){
             steps{
                 echo "Running system tests..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -242,7 +242,7 @@ pipeline{
             }
         }
 
-        stage("Deploy DirPatch"){
+        stage("Deploy_DirPatch"){
             steps{
                 echo "Deploying dirpatch..."
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
@@ -261,12 +261,6 @@ pipeline{
                     }
                 }
             }
-        }
-    }
-    
-    post{
-        success{
-            archiveArtifacts artifacts: "**/FisGo/PATCH/**/*"
         }
     }
 }
