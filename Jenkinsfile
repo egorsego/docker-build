@@ -43,9 +43,9 @@ pipeline{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
                 }
-                script{
-                    docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/rf_compiler/compiler.dockerfile .")
-                }
+                //script{
+                    //docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/rf_compiler/compiler.dockerfile .")
+                //}
             }
             post{
                 always{
@@ -70,12 +70,12 @@ pipeline{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
                 }
-                script{
-                    docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/sf_library/library.dockerfile .")
-                }
+                //script{
+                    //docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/sf_library/library.dockerfile .")
+                //}
                 
-                sh "docker create --name libraryContainer ${libraryImageTitle}:latest"
-                sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH"
+                //sh "docker create --name libraryContainer ${libraryImageTitle}:latest"
+                //sh "docker cp libraryContainer:/tmp/FisGo/PATCH/lib ./FisGo/PATCH"
             }
             post{
                 always{
@@ -100,12 +100,12 @@ pipeline{
                 withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
                     sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
                 }
-                script{
-                    docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/fiscat/fiscat.dockerfile .")
-                }
+                //script{
+                    //docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/fiscat/fiscat.dockerfile .")
+                //}
                 
-                sh "docker create --name fiscatContainer ${fiscatImageTitle}:latest"
-                sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/PATCH/FisGo"
+                //sh "docker create --name fiscatContainer ${fiscatImageTitle}:latest"
+                //sh "docker cp fiscatContainer:/tmp/FisGo/build/fiscat ./FisGo/PATCH/FisGo"
             }
             post{
                 always{
