@@ -20,19 +20,13 @@ pipeline{
             }
             post{
                 always{
-		            withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                        sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+		            informGitOnStageStart()
                 }
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -40,9 +34,7 @@ pipeline{
         stage("Build_Compiler_Image"){
             steps{
                 echo "Building compiler image..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
                 //script{
                     //docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/rf_compiler/compiler.dockerfile .")
                 //}
@@ -52,14 +44,10 @@ pipeline{
                     removeUnusedContainersAndDanglingImages()
                 }
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -67,9 +55,7 @@ pipeline{
         stage("Deploy_Libraries"){
             steps{
                 echo "Deploying libraries..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
                 //script{
                     //docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/sf_library/library.dockerfile .")
                 //}
@@ -82,14 +68,10 @@ pipeline{
                     removeUnusedContainersAndDanglingImages()
                 }
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -97,9 +79,7 @@ pipeline{
         stage("Compile_Fiscat"){
             steps{
                 echo "Compiling fiscat..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
                 //script{
                     //docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/fiscat/fiscat.dockerfile .")
                 //}
@@ -112,14 +92,10 @@ pipeline{
                     removeUnusedContainersAndDanglingImages()
                 }
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -127,9 +103,7 @@ pipeline{
         stage("Compile_Unit_Tests"){
             steps{
                 echo "Compiling unit tests..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
                 //script{
                     //docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/units/units.dockerfile .")
                 //}
@@ -142,14 +116,10 @@ pipeline{
                     removeUnusedContainersAndDanglingImages()
                 }
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -157,9 +127,7 @@ pipeline{
         stage("Patch_Cashbox"){
             steps{
                 echo "Patching cashbox..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
                 /*
                 sh '''
                     cd ./FisGo/PATCH/
@@ -176,14 +144,10 @@ pipeline{
             }
             post{
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -191,21 +155,15 @@ pipeline{
         stage("Run_Unit_Tests"){
             steps{
                 echo "Running unit tests..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
                 //sh "ssh -T root@${cashboxIP} < ${env.WORKSPACE}/CI/bash_scripts/run_unit_tests.sh"
             }
             post{
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -213,9 +171,7 @@ pipeline{
         stage("Run_System_Tests"){
             steps{
                 echo "Running system tests..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
 
                 dir("AutoTests"){
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGoTests.git", branch: "master"
@@ -230,14 +186,10 @@ pipeline{
                     allure includeProperties: false, jdk: '', results: [[path: '**/target/allure-results']]
                 }
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
@@ -245,20 +197,14 @@ pipeline{
         stage("Deploy_DirPatch"){
             steps{
                 echo "Deploying dirpatch..."
-                withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {  
-                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_start.sh $TOKEN ${env.STAGE_NAME}"
-                }
+                informGitOnStageStart()
             }
             post{
                 success{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_success.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageSuccess()
                 }
                 failure{
-                    withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
-	                    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
-                    }
+                    informGitOnStageFailure()
                 }
             }
         }
