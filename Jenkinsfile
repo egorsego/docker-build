@@ -209,6 +209,12 @@ pipeline{
             }
         }
     }
+    post{
+        success{
+            sh "chmod 755 ${env.WORKSPACE}/CI/bash_scripts/tag_creation.sh"
+            sh "${env.WORKSPACE}/CI/bash_scripts/tag_creation.sh"
+        }
+    }
 }
 
 void removeUnusedContainersAndDanglingImages() {
