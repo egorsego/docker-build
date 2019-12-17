@@ -256,7 +256,7 @@ void informGitOnStageFailure() {
 }
 
 void setFisgoVersion() {
-    fisgoVerion = sh(returnStdout: true, script:'''
-        grep -Po 'fisgo_cur_version = "\K(.*[0-9])' ${env.WORKSPACE}/FisGo/src/appl/config.h
-    ''')
+    fisgoVerion = sh(returnStdout: true, script:"""
+        grep -Po 'fisgo_cur_version = "\\K(.*[0-9])' ${env.WORKSPACE}/FisGo/src/appl/config.h
+    """)
 }
