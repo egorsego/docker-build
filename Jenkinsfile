@@ -172,19 +172,8 @@ pipeline{
             steps{
                 echo "Running system tests..."
                 informGitOnStageStart()
-
-                dir("AutoTests"){
-                    git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGoTests.git", branch: "master"
-                }          
-                sh '''
-                    cd ./AutoTests
-                    mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/dkf_test.xml
-                '''
             }
             post{
-                always{
-                    allure includeProperties: false, jdk: '', results: [[path: '**/target/allure-results']]
-                }
                 success{
                     informGitOnStageSuccess()
                 }
@@ -214,7 +203,7 @@ pipeline{
             sh "chmod 755 ${env.WORKSPACE}/CI/bash_scripts/tag_creation.sh"
             withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                 sh """
-                    sh "touch test.txt"
+                    sh "touch ./test.txt"
                     sh "git add ."    
                     sh "git commit -m 'commit from Jenkins'"
                     sh "git push https://${USER}:${PASS}@github.com/egorsego/docker-build.git"
