@@ -89,6 +89,7 @@ pipeline{
             steps{
                 echo "Compiling fiscat..."
                 informGitOnStageStart()
+                setFisgoVersion()
                 //script{
                     //docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/fiscat/fiscat.dockerfile .")
                 //}
@@ -252,4 +253,10 @@ void informGitOnStageFailure() {
     withCredentials([string(credentialsId: 'pr_builder_plugin', variable: 'TOKEN')]) {
 	    sh "${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh $TOKEN ${env.STAGE_NAME}"
     }
+}
+
+void setFisgoVersion() {
+    fisgoVerion = sh(returnStdout: true, script:'''
+        grep -Po 'fisgo_cur_version = "\K(.*[0-9])' ${env.WORKSPACE}/FisGo/src/appl/config.h
+    ''')
 }
