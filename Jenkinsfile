@@ -90,6 +90,7 @@ pipeline{
                 echo "Compiling fiscat..."
                 informGitOnStageStart()
                 setFisgoVersion()
+                sh "echo ${fisgoVersion}"
                 //script{
                     //docker.build(fiscatImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/fiscat/fiscat.dockerfile .")
                 //}
@@ -114,6 +115,7 @@ pipeline{
             steps{
                 echo "Compiling unit tests..."
                 informGitOnStageStart()
+                sh "echo ${fisgoVersion}"
                 //script{
                     //docker.build(unitsTestImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/units/units.dockerfile .")
                 //}
