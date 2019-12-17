@@ -5,6 +5,7 @@ def unitsTestImageTitle = "dreamkas-units"
 def cashboxIP = "192.168.242.180"
 def fisgoVersion = "Text"
 
+
 pipeline{
     agent any
     stages{
