@@ -212,8 +212,8 @@ pipeline{
     post{
         success{
             sh "chmod 755 ${env.WORKSPACE}/CI/bash_scripts/tag_creation.sh"
-            withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', passwordVariable: 'Pass', usernameVariable: 'User')]) {
-                sh "echo https://${User}:${Pass}@github**** > ~/.git-credentials"
+            withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                sh "echo https://${USER}:${PASS}@github**** > ~/.git-credentials"
                 sh "git config --local credential.helper store --file=~/.git-credentials"
                 sh "${env.WORKSPACE}/CI/bash_scripts/tag_creation.sh"
             }  
