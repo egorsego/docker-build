@@ -203,7 +203,6 @@ pipeline{
             sh "chmod 755 ${env.WORKSPACE}/CI/bash_scripts/tag_creation.sh"
             withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                 sh """
-                    sh "touch ./test.txt"
                     sh "git add ."    
                     sh "git commit -m 'commit from Jenkins'"
                     sh "git push https://${USER}:${PASS}@github.com/egorsego/docker-build.git"
