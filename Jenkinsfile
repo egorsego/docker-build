@@ -3,6 +3,7 @@ def libraryImageTitle = "dreamkas-sf-library"
 def fiscatImageTitle = "dreamkas-fiscat-f"
 def unitsTestImageTitle = "dreamkas-units"
 def cashboxIP = "192.168.242.180"
+def fisgoVersion = "Text"
 
 pipeline{
     agent any
@@ -17,6 +18,7 @@ pipeline{
                 sh "chmod +x ${env.WORKSPACE}/CI/bash_scripts/stage_start.sh"
                 sh "chmod +x ${env.WORKSPACE}/CI/bash_scripts/stage_success.sh"
                 sh "chmod +x ${env.WORKSPACE}/CI/bash_scripts/stage_failure.sh"
+                sh "echo ${fisgoVersion}"
             }
             post{
                 always{
@@ -35,6 +37,11 @@ pipeline{
             steps{
                 echo "Building compiler image..."
                 informGitOnStageStart()
+                script{
+                    fisgoVersion = "Another text"
+                }
+
+                sh "echo ${fisgoVersion}"
                 //script{
                     //docker.build(compilerImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/rf_compiler/compiler.dockerfile .")
                 //}
@@ -56,6 +63,7 @@ pipeline{
             steps{
                 echo "Deploying libraries..."
                 informGitOnStageStart()
+                sh "echo ${fisgoVersion}"
                 //script{
                     //docker.build(libraryImageTitle + ":latest", "-f ${env.WORKSPACE}/CI/sf_library/library.dockerfile .")
                 //}
