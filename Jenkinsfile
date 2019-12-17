@@ -206,7 +206,7 @@ pipeline{
                     touch test.txt
                     git add .    
                     git commit -m "commit from Jenkins"
-                    git push origin HEAD:$TARGET_BRANCH 
+                    git push origin HEAD:master 
                 """
 
                 //git push https://${USER}:${PASS}@github.com/egorsego/docker-build.git
