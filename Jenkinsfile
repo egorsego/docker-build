@@ -222,6 +222,8 @@ pipeline{
                 sh """
                     git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
                     cd dirPatch
+                    git branch
+                    git pull
                     touch test2.txt
                     git add .    
                     git commit -m "dirPatch dreamkasF 1.25.0"
