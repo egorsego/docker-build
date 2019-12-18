@@ -224,7 +224,7 @@ pipeline{
                     touch test2.txt
                     git add .    
                     git commit -m "dirPatch dreamkasF 1.25.0"
-                    git git push origin HEAD:master
+                    git push origin HEAD:master
                     git tag 1.25.1
                     git push origin --tags
                 """
