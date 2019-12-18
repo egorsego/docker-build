@@ -215,13 +215,18 @@ pipeline{
     post{
         success{
             withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                dir("dirPatch") {
+                    git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/dirPatch.git", branch: "master"
+                }
+
                 sh """
                     git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
+                    cd dirPatch
                     touch test.txt
                     git add .    
-                    git commit -m "commit from Jenkins"
+                    git commit -m "dirPatch dreamkasF 1.25.0"
                     git push origin HEAD:master
-                    git tag 0.0.3
+                    git tag 1.25.0
                     git push origin --tags
                 """
 
