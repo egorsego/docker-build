@@ -221,12 +221,11 @@ pipeline{
             withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                 sh """
                     git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
-                    cd dirPatch
                     touch test2.txt
                     git add .    
                     git commit -m "dirPatch dreamkasF 1.25.0"
-                    git push https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
-                    git tag 1.25.0
+                    git git push origin HEAD:master
+                    git tag 1.25.1
                     git push origin --tags
                 """
 
