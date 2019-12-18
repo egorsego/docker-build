@@ -214,23 +214,24 @@ pipeline{
     }
     post{
         success{
-            withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                dir("dirPatch") {
+            dir("dirPatch") {
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/egorsego/dirPatch.git", branch: "master"
-                }
+            }
 
+            withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                 sh """
                     git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
                     cd dirPatch
                     touch test.txt
                     git add .    
                     git commit -m "dirPatch dreamkasF 1.25.0"
-                    git push origin HEAD:master
+                    git push https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
                     git tag 1.25.0
                     git push origin --tags
                 """
 
                 //git push https://${USER}:${PASS}@github.com/egorsego/docker-build.git
+                //git push origin HEAD:master
                 //sh "git tag 1.5"
                 //sh "git push origin --tags"
                 //git@github.com:egorsego/docker-build.git
