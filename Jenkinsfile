@@ -220,8 +220,8 @@ pipeline{
 
             withCredentials([usernamePassword(credentialsId: 'fisgo-ci-github', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                 sh """
-                    git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
                     cd dirPatch
+                    git remote set-url origin https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
                     touch test3.txt
                     git add .
                     git commit -m "dirPatch dreamkasF 1.25.0"
@@ -230,6 +230,8 @@ pipeline{
                     git push origin --tags
                 """
 
+
+                //git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
                 //git remote set-url origin https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
 
                 //git push https://${USER}:${PASS}@github.com/egorsego/docker-build.git
