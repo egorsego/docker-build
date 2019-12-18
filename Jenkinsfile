@@ -222,7 +222,7 @@ pipeline{
                 sh """
                     git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
                     cd dirPatch
-                    touch test.txt
+                    touch test2.txt
                     git add .    
                     git commit -m "dirPatch dreamkasF 1.25.0"
                     git push https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
