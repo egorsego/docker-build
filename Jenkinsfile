@@ -222,9 +222,8 @@ pipeline{
                 sh """
                     git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
                     cd dirPatch
-                    git config --get remote.origin.url
-                    git branch
-                    git pull origin master
+                    git remote set-url origin https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
+                    git remote -v
                     touch test2.txt
                     git add .    
                     git commit -m "dirPatch dreamkasF 1.25.0"
