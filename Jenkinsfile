@@ -225,13 +225,17 @@ pipeline{
                 sh """
                     cd dirPatch
                     git remote set-url origin https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
-                    touch test5.txt
+                    touch test6.txt
                     git add .
                     git commit -m "dirPatch dreamkasF ${fisgoVersion}"
                     git push origin master
                 """
 
-                sh "cd FisGo ; git tag ${fisgoVersion} ; git push origin --tags"
+                sh """
+                    cd FisGo 
+                    git tag ${fisgoVersion}
+                    git push origin --tags
+                """
 
 
                 //git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
