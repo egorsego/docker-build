@@ -8,6 +8,9 @@ def fisgoVersion = "Text"
 
 pipeline{
     agent any
+    options {
+        checkoutToSubdirectory("FisGo")
+    }
     stages{
         stage("Checkout"){
             steps{
@@ -227,6 +230,8 @@ pipeline{
                     git commit -m "dirPatch dreamkasF 1.26.0"
                     git push origin master
                 """
+
+                sh "cd FisGo ; git tag 0.0.8 ; git push origin --tags"
 
 
                 //git config --local credential.helper "!f() { echo username=\\$USER; echo password=\\$PASS; }; f"
