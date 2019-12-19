@@ -222,12 +222,10 @@ pipeline{
                 sh """
                     cd dirPatch
                     git remote set-url origin https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
-                    touch test3.txt
+                    touch test4.txt
                     git add .
-                    git commit -m "dirPatch dreamkasF 1.25.0"
+                    git commit -m "dirPatch dreamkasF 1.26.0"
                     git push origin master
-                    git tag 1.25.2
-                    git push origin --tags
                 """
 
 
