@@ -21,7 +21,7 @@
 
 static const int CONFIG_VERSION = 14;
 
-static const string fisgo_cur_version = "1.2734.2225";
+static const string fisgo_cur_version = "1.33.1";
 static const string kkt_reg_version   = "001";
 static const string VERSION_FOR_STAT  =  "100.6.1.3";
 static const string TIMESTAMP_FILE    = "timestamp";

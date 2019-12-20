@@ -20,7 +20,7 @@ pipeline{
                     fisgoVersion = setFisgoVersion()
                     availableTags = getTags()
                     println(availableTags)
-                    println(availableTags.getClass())
+                    println(fisgoVersion)
                     if(availableTags.contains(fisgoVersion)) {
                         currentBuild.result = 'ABORTED'
                         error('Tags already contain current version')
