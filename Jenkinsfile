@@ -3,7 +3,8 @@ def libraryImageTitle = "dreamkas-sf-library"
 def fiscatImageTitle = "dreamkas-fiscat-f"
 def unitsTestImageTitle = "dreamkas-units"
 def cashboxIP = "192.168.242.180"
-def fisgoVersion = "Text"
+def fisgoVersion
+def availableTags
 
 
 pipeline{
@@ -14,6 +15,12 @@ pipeline{
     stages{
         stage("Checkout"){
             steps{
+
+                script{
+                    availableTags = getTags()
+                    println(availableTags)
+                }
+                
                 echo "Cloning FisGo_CI repository code..."
                 dir("CI") {
                     git credentialsId: "fisgo-ci-github", url: "https://github.com/dreamkas/FisGo_CI.git", branch: "master"
@@ -225,7 +232,7 @@ pipeline{
                 sh """
                     cd dirPatch
                     git remote set-url origin https://${USER}:${PASS}@github.com/egorsego/dirPatch.git
-                    touch test7.txt
+                    touch test10.txt
                     git add .
                     git commit -m "dirPatch dreamkasF ${fisgoVersion}"
                     git push origin master
@@ -279,4 +286,9 @@ String setFisgoVersion() {
         grep -Po 'fisgo_cur_version = "\\K(.*[0-9])' ${env.WORKSPACE}/FisGo/src/appl/config.h
     """)
     return fisgoVerion
+}
+
+String getTags() {
+    tags = sh(returnStdout: true, script:"git tag")
+    return tags
 }
