@@ -17,8 +17,14 @@ pipeline{
             steps{
 
                 script{
+                    fisgoVersion = setFisgoVersion()
                     availableTags = getTags()
                     println(availableTags)
+                    println(availableTags.getClass())
+                    if(availableTags.contains(fisgoVersion)) {
+                        currentBuild.result = 'ABORTED'
+                        error('Tags already contain current version')
+                    }
                 }
                 
                 echo "Cloning FisGo_CI repository code..."
