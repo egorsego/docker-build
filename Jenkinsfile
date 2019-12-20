@@ -289,6 +289,6 @@ String setFisgoVersion() {
 }
 
 String getTags() {
-    tags = sh(returnStdout: true, script:"git tag")
+    tags = sh(returnStdout: true, script:"cd FisGo ; git tag")
     return tags
 }
