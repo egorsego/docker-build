@@ -5,6 +5,7 @@ def unitsTestImageTitle = "dreamkas-units"
 def cashboxIP = "192.168.242.180"
 def fisgoVersion
 def availableTags
+def patchMD5
 
 
 pipeline{
@@ -17,8 +18,10 @@ pipeline{
             steps{
 
                 script{
+                    patchMD5 = getMd5ofFile("${env.WORKSPACE}/FisGo/fisGoUpdate.tar")
                     fisgoVersion = setFisgoVersion()
                     availableTags = getTags()
+                    println(patchMD5)
                     println(availableTags)
                     println(fisgoVersion)
                     if(availableTags.contains(fisgoVersion)) {
@@ -297,4 +300,9 @@ String setFisgoVersion() {
 String getTags() {
     tags = sh(returnStdout: true, script:"cd FisGo ; git tag")
     return tags
+}
+
+String getMd5ofFile(String filePath) {
+    md5Value = sh(returnStdout: true, script:"md5=($(md5sum ${filePath})) ; echo $md5")
+    return md5Value
 }
