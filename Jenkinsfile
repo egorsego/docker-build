@@ -303,6 +303,6 @@ String getTags() {
 }
 
 String getMd5ofFile(String filePath) {
-    md5Value = sh(returnStdout: true, script:"md5=($(md5sum ${filePath})) ; echo $md5")
+    md5Value = sh(returnStdout: true, script:"md5sum ${filePath} | cut -d ' ' -f 1")
     return md5Value
 }
